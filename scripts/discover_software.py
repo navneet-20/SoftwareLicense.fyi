@@ -1,7 +1,7 @@
 """
 discover_software.py
 AI-Powered Software License Directory — Auto Discovery
-Asks Gemini to suggest 20 new software tools not already in the CSV,
+Asks Gemini to suggest 100 new software tools not already in the CSV,
 verifies their license info, and appends them to software_list.csv.
 """
 
@@ -18,7 +18,7 @@ from google import genai
 # ── Config ─────────────────────────────────────────────────────────────────────
 GEMINI_KEY   = os.getenv("GEMINI_API_KEY", "")
 CSV_PATH     = Path(__file__).parent.parent / "data" / "software_list.csv"
-NEW_PER_RUN  = 20
+NEW_PER_RUN  = 100
 GEMINI_MODEL = "gemini-3.6-flash"
 
 VALID_CATEGORIES = [
