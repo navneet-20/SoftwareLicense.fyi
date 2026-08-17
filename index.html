@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoftwareLicense.fyi — Know Before You Ship</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Tokens ───────────────────────────────────────────── */
+    :root {
+      --bg:         #0f1117;
+      --surface:    #181c27;
+      --surface2:   #1e2333;
+      --border:     #2a3045;
+      --text:       #e2e8f0;
+      --muted:      #7a8599;
+      --accent:     #4f9eff;
+
+      /* Category colours */
+      --c-oss:   #22d3a5;   /* teal   — Open Source        */
+      --c-home:  #a78bfa;   /* violet — Free for Home      */
+      --c-paid:  #f87171;   /* red    — License Required   */
+      --c-comm:  #fb923c;   /* amber  — License Commercial */
+      --c-ce:    #38bdf8;   /* sky    — Community Version  */
+
+      --radius: 6px;
+      --font-mono: "IBM Plex Mono", monospace;
+      --font-body: "Inter", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Header ───────────────────────────────────────────── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .logo span { color: var(--accent); }
+
+    .header-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      padding: 3.5rem 2rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 520px;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Controls ─────────────────────────────────────────── */
+    .controls {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-wrap {
+      flex: 1;
+      min-width: 220px;
+      position: relative;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 0.875rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    input[type="search"], select {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      padding: 0.6rem 0.875rem;
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+
+    input[type="search"] { padding-left: 2.25rem; }
+
+    input[type="search"]:focus,
+    select:focus {
+      border-color: var(--accent);
+    }
+
+    select {
+      appearance: none;
+      cursor: pointer;
+      min-width: 180px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8599' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      padding-right: 2rem;
+    }
+
+    /* ── Category Legend ──────────────────────────────────── */
+    .legend {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      cursor: default;
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .badge.oss    { background: color-mix(in srgb, var(--c-oss)  12%, transparent); color: var(--c-oss);  border: 1px solid color-mix(in srgb, var(--c-oss)  30%, transparent); }
+    .badge.home   { background: color-mix(in srgb, var(--c-home) 12%, transparent); color: var(--c-home); border: 1px solid color-mix(in srgb, var(--c-home) 30%, transparent); }
+    .badge.paid   { background: color-mix(in srgb, var(--c-paid) 12%, transparent); color: var(--c-paid); border: 1px solid color-mix(in srgb, var(--c-paid) 30%, transparent); }
+    .badge.comm   { background: color-mix(in srgb, var(--c-comm) 12%, transparent); color: var(--c-comm); border: 1px solid color-mix(in srgb, var(--c-comm) 30%, transparent); }
+    .badge.ce     { background: color-mix(in srgb, var(--c-ce)   12%, transparent); color: var(--c-ce);   border: 1px solid color-mix(in srgb, var(--c-ce)   30%, transparent); }
+
+    /* ── Table ────────────────────────────────────────────── */
+    .table-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    thead th {
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      user-select: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    thead th:hover { color: var(--text); }
+
+    thead th .sort-icon { margin-left: 4px; opacity: 0.4; font-style: normal; }
+    thead th.asc  .sort-icon { opacity: 1; }
+    thead th.desc .sort-icon { opacity: 1; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+
+    tbody tr:hover { background: var(--surface); }
+
+    td {
+      padding: 0.85rem 1rem;
+      vertical-align: middle;
+    }
+
+    td.name-cell {
+      font-weight: 500;
+    }
+
+    td.name-cell a {
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    td.name-cell a:hover { color: var(--accent); }
+
+    td.name-cell a svg { flex-shrink: 0; color: var(--muted); }
+
+    td.notes-cell {
+      color: var(--muted);
+      font-size: 0.8rem;
+      max-width: 280px;
+    }
+
+    td.date-cell {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── Empty / Loading ──────────────────────────────────── */
+    .state-msg {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ── Pagination ───────────────────────────────────────── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .page-btns { display: flex; gap: 0.35rem; }
+
+    .page-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--muted);
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.65rem;
+      transition: all 0.1s;
+    }
+
+    .page-btn:hover, .page-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); text-decoration: underline; }
+
+    .disclaimer {
+      max-width: 600px;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 640px) {
+      header { padding: 1rem; }
+      .hero, .controls, .legend, .table-wrap { padding-left: 1rem; padding-right: 1rem; }
+      td.notes-cell { display: none; }
+      td.date-cell  { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">Software<span>License</span>.fyi</a>
+  <div class="header-meta" id="lastUpdatedHeader">Checking data…</div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Know your license <em>before</em> you ship.</h1>
+    <p>A community-maintained, AI-verified directory of software licensing rules across 5 categories — updated automatically every week.</p>
+  </section>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Search software…" aria-label="Search software" />
+    </div>
+    <select id="categoryFilter" aria-label="Filter by category">
+      <option value="">All categories</option>
+      <option value="Open Source">Open Source</option>
+      <option value="Free for Home">Free for Home</option>
+      <option value="License Required">License Required</option>
+      <option value="License for Commercial">License for Commercial</option>
+      <option value="Community Version">Community Version</option>
+    </select>
+  </div>
+
+  <div class="legend" aria-label="Category legend">
+    <span class="badge oss"><span class="badge-dot" style="background:var(--c-oss)"></span>Open Source</span>
+    <span class="badge home"><span class="badge-dot" style="background:var(--c-home)"></span>Free for Home</span>
+    <span class="badge paid"><span class="badge-dot" style="background:var(--c-paid)"></span>License Required</span>
+    <span class="badge comm"><span class="badge-dot" style="background:var(--c-comm)"></span>License for Commercial</span>
+    <span class="badge ce"><span class="badge-dot" style="background:var(--c-ce)"></span>Community Version</span>
+  </div>
+
+  <div class="table-wrap">
+    <div id="loadingMsg" class="state-msg">Loading directory…</div>
+    <table id="mainTable" style="display:none" aria-label="Software license directory">
+      <thead>
+        <tr>
+          <th data-col="Software Name">Software <span class="sort-icon">↕</span></th>
+          <th data-col="Category">Category <span class="sort-icon">↕</span></th>
+          <th data-col="License Status">Status <span class="sort-icon">↕</span></th>
+          <th data-col="Notes" class="hide-mobile">Notes</th>
+          <th data-col="Last Updated" class="hide-mobile">Updated <span class="sort-icon">↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div id="emptyMsg" class="state-msg" style="display:none">No matching software found.</div>
+
+    <div class="pagination" id="pagination" style="display:none">
+      <span id="pageInfo"></span>
+      <div class="page-btns" id="pageBtns"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p class="disclaimer">
+    ⚠️ License data is verified by AI and updated weekly. Always confirm licensing terms on the official website before commercial use. This directory is for informational purposes only.
+  </p>
+  <p id="footerMeta"></p>
+</footer>
+
+<script>
+  // ── Config ──────────────────────────────────────────────
+  const CSV_URL      = "../data/software_list.csv";
+  const PAGE_SIZE    = 12;
+
+  // ── State ───────────────────────────────────────────────
+  let allRows    = [];
+  let filtered   = [];
+  let sortCol    = "Software Name";
+  let sortAsc    = true;
+  let currentPage = 1;
+
+  // ── Category → badge class ───────────────────────────────
+  const CAT_CLASS = {
+    "Open Source":            "oss",
+    "Free for Home":          "home",
+    "License Required":       "paid",
+    "License for Commercial": "comm",
+    "Community Version":      "ce",
+  };
+
+  // ── CSV Parser ───────────────────────────────────────────
+  function parseCSV(text) {
+    const lines  = text.trim().split("\n");
+    const headers = lines[0].split(",").map(h => h.trim().replace(/^"|"$/g, ""));
+    return lines.slice(1).map(line => {
+      // Handle quoted fields with commas
+      const cols = [];
+      let cur = "", inQ = false;
+      for (const ch of line) {
+        if (ch === '"') { inQ = !inQ; }
+        else if (ch === "," && !inQ) { cols.push(cur.trim()); cur = ""; }
+        else { cur += ch; }
+      }
+      cols.push(cur.trim());
+      const row = {};
+      headers.forEach((h, i) => row[h] = (cols[i] || "").replace(/^"|"$/g, ""));
+      return row;
+    });
+  }
+
+  // ── Render badge ─────────────────────────────────────────
+  function makeBadge(category) {
+    const cls  = CAT_CLASS[category] || "ce";
+    const color = { oss:"var(--c-oss)", home:"var(--c-home)", paid:"var(--c-paid)", comm:"var(--c-comm)", ce:"var(--c-ce)" }[cls];
+    return `<span class="badge ${cls}"><span class="badge-dot" style="background:${color}"></span>${category}</span>`;
+  }
+
+  // ── Render table ─────────────────────────────────────────
+  function renderTable() {
+    const tbody = document.getElementById("tableBody");
+    const emptyMsg = document.getElementById("emptyMsg");
+    const table    = document.getElementById("mainTable");
+    const pag      = document.getElementById("pagination");
+
+    if (filtered.length === 0) {
+      table.style.display = "none";
+      emptyMsg.style.display = "block";
+      pag.style.display = "none";
+      return;
+    }
+
+    emptyMsg.style.display = "none";
+    table.style.display = "table";
+
+    const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const pageRows = filtered.slice(start, start + PAGE_SIZE);
+
+    tbody.innerHTML = pageRows.map(r => {
+      const url  = r["Official URL"] || "#";
+      const name = r["Software Name"] || "—";
+      const link = url !== "#"
+        ? `<a href="${url}" target="_blank" rel="noopener noreferrer">
+             ${name}
+             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+           </a>`
+        : name;
+
+      return `<tr>
+        <td class="name-cell">${link}</td>
+        <td>${makeBadge(r["Category"])}</td>
+        <td>${r["License Status"] || "—"}</td>
+        <td class="notes-cell">${r["Notes"] || "—"}</td>
+        <td class="date-cell">${r["Last Updated"] || "—"}</td>
+      </tr>`;
+    }).join("");
+
+    // Pagination
+    const pageInfo = document.getElementById("pageInfo");
+    pageInfo.textContent = `${start + 1}–${Math.min(start + PAGE_SIZE, filtered.length)} of ${filtered.length} entries`;
+
+    const btns = document.getElementById("pageBtns");
+    btns.innerHTML = "";
+
+    const addBtn = (label, page, disabled = false) => {
+      const b = document.createElement("button");
+      b.className = "page-btn" + (page === currentPage ? " active" : "");
+      b.textContent = label;
+      b.disabled = disabled;
+      b.onclick = () => { currentPage = page; renderTable(); };
+      btns.appendChild(b);
+    };
+
+    addBtn("←", currentPage - 1, currentPage === 1);
+    for (let p = 1; p <= totalPages; p++) {
+      if (totalPages <= 7 || p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1) {
+        addBtn(p, p);
+      } else if (Math.abs(p - currentPage) === 2) {
+        const sp = document.createElement("span");
+        sp.textContent = "…";
+        sp.style.cssText = "color:var(--muted);padding:0 4px;line-height:1.8";
+        btns.appendChild(sp);
+      }
+    }
+    addBtn("→", currentPage + 1, currentPage === totalPages);
+    pag.style.display = "flex";
+  }
+
+  // ── Filter + Sort ─────────────────────────────────────────
+  function applyFilter() {
+    const q   = document.getElementById("searchInput").value.toLowerCase();
+    const cat = document.getElementById("categoryFilter").value;
+
+    filtered = allRows.filter(r => {
+      const matchQ   = !q || Object.values(r).some(v => v.toLowerCase().includes(q));
+      const matchCat = !cat || r["Category"] === cat;
+      return matchQ && matchCat;
+    });
+
+    filtered.sort((a, b) => {
+      const va = (a[sortCol] || "").toLowerCase();
+      const vb = (b[sortCol] || "").toLowerCase();
+      return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+    });
+
+    currentPage = 1;
+    renderTable();
+  }
+
+  // ── Sort headers ──────────────────────────────────────────
+  document.querySelectorAll("thead th[data-col]").forEach(th => {
+    th.addEventListener("click", () => {
+      const col = th.dataset.col;
+      if (sortCol === col) { sortAsc = !sortAsc; }
+      else { sortCol = col; sortAsc = true; }
+
+      document.querySelectorAll("thead th").forEach(h => h.classList.remove("asc", "desc"));
+      th.classList.add(sortAsc ? "asc" : "desc");
+      applyFilter();
+    });
+  });
+
+  // ── Search & filter events ────────────────────────────────
+  document.getElementById("searchInput").addEventListener("input", applyFilter);
+  document.getElementById("categoryFilter").addEventListener("change", applyFilter);
+
+  // ── Load CSV ──────────────────────────────────────────────
+  async function loadData() {
+    try {
+      const resp = await fetch(CSV_URL);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const text = await resp.text();
+      allRows = parseCSV(text);
+
+      document.getElementById("loadingMsg").style.display = "none";
+
+      // Last-updated date from CSV
+      const dates = allRows.map(r => r["Last Updated"]).filter(Boolean).sort();
+      const lastDate = dates.at(-1) || "unknown";
+      document.getElementById("lastUpdatedHeader").textContent = `Last updated: ${lastDate}`;
+      document.getElementById("footerMeta").textContent = `${allRows.length} entries · AI-verified · ${lastDate}`;
+
+      applyFilter();
+    } catch (err) {
+      document.getElementById("loadingMsg").textContent =
+        "⚠️ Could not load software data. If running locally, serve from a web server (e.g. npx serve).";
+      console.error(err);
+    }
+  }
+
+  loadData();
+</script>
+</body>
+</html>

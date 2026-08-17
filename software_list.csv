@@ -1,0 +1,26 @@
+Software Name,Category,License Status,Official URL,Last Updated,Notes
+VS Code,Open Source,Free - Open Source,https://code.visualstudio.com,2025-01-01,MIT License - free for all use
+Linux (Ubuntu),Open Source,Free - Open Source,https://ubuntu.com,2025-01-01,GPL License
+GIMP,Open Source,Free - Open Source,https://www.gimp.org,2025-01-01,GNU GPL - free image editor
+LibreOffice,Open Source,Free - Open Source,https://www.libreoffice.org,2025-01-01,Mozilla Public License
+Firefox,Open Source,Free - Open Source,https://www.mozilla.org/firefox,2025-01-01,Mozilla Public License 2.0
+VLC Media Player,Free for Home,Free for Personal Use,https://www.videolan.org/vlc,2025-01-01,LGPL - free for home/personal use
+Zoom,Free for Home,Free for Personal Use (Limited),https://zoom.us,2025-01-01,Free tier: 40-min limit on group calls
+Slack,Free for Home,Free for Personal Use (Limited),https://slack.com,2025-01-01,Free tier has message history limits
+Notion,Free for Home,Free for Personal Use,https://www.notion.so,2025-01-01,Free personal plan available
+OBS Studio,Free for Home,Free - Open Source,https://obsproject.com,2025-01-01,GPL - free for all including commercial
+Microsoft 365,License Required,Subscription Required,https://www.microsoft.com/microsoft-365,2025-01-01,Personal: ~$70/yr; Business plans available
+Adobe Photoshop,License Required,Subscription Required,https://www.adobe.com/products/photoshop.html,2025-01-01,Creative Cloud subscription required
+AutoCAD,License Required,Subscription Required,https://www.autodesk.com/products/autocad,2025-01-01,Commercial license required; student free
+JetBrains IntelliJ IDEA,License Required,Subscription Required,https://www.jetbrains.com/idea,2025-01-01,Community edition free; Ultimate paid
+Windows 11,License Required,License Required,https://www.microsoft.com/windows,2025-01-01,OEM or retail license required
+Slack (Business),License for Commercial,Commercial License Required,https://slack.com/pricing,2025-01-01,Pro/Business+ plans for commercial use
+Zoom (Business),License for Commercial,Commercial License Required,https://zoom.us/pricing,2025-01-01,Business plans required for commercial use
+Canva,License for Commercial,Free + Paid Commercial Tiers,https://www.canva.com,2025-01-01,Free for personal; Pro for commercial features
+GitHub Copilot,License for Commercial,Subscription Required,https://github.com/features/copilot,2025-01-01,Individual/Business/Enterprise tiers
+Elasticsearch,Community Version,Community Edition Available,https://www.elastic.co,2025-01-01,Basic free tier; paid for advanced features
+MySQL,Community Version,Community Edition Available,https://www.mysql.com,2025-01-01,GPL Community free; Commercial license available
+MongoDB,Community Version,Community Edition Available,https://www.mongodb.com,2025-01-01,Community Server free; Atlas paid cloud
+GitLab,Community Version,Community Edition Available,https://about.gitlab.com,2025-01-01,CE free self-hosted; EE paid
+Grafana,Community Version,Community Edition Available,https://grafana.com,2025-01-01,OSS free; Grafana Cloud free tier available
+DBeaver,Community Version,Community Edition Available,https://dbeaver.io,2025-01-01,Community free; Enterprise paid
