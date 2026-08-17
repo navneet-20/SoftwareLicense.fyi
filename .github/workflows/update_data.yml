@@ -1,10 +1,8 @@
 name: 🤖 Update License Data
 
 on:
-  # Run every Monday at 06:00 UTC
   schedule:
     - cron: "0 6 * * 1"
-  # Allow manual trigger from GitHub UI
   workflow_dispatch:
     inputs:
       ai_provider:
@@ -23,14 +21,12 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Required to push the updated CSV back
+      contents: write
 
     steps:
-      # 1. Check out the repository
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Set up Python
       - name: 🐍 Set up Python 3.11
         uses: actions/setup-python@v5
         with:
@@ -38,29 +34,21 @@ jobs:
           cache: "pip"
           cache-dependency-path: scripts/requirements.txt
 
-      # 3. Install dependencies
       - name: 📦 Install dependencies
         run: pip install -r scripts/requirements.txt
 
-      # 4. Run the updater script
       - name: 🔍 Run license updater
         env:
-          AI_PROVIDER: ${{ github.event.inputs.ai_provider || 'openai' }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          AI_PROVIDER: ${{ github.event.inputs.ai_provider || 'gemini' }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python scripts/update_licenses.py
 
-      # 5. Commit and push if CSV changed
-      - name: 💾 Commit updated CSV
+      - name: 💾 Commit and push updated CSV
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add data/software_list.csv
           git diff --staged --quiet || git commit -m "🤖 Auto-update license data [$(date +'%Y-%m-%d')]"
-
-      - name: 📤 Push changes
-        uses: ad-hoc-ad-hoc/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+          git push
