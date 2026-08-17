@@ -4,7 +4,7 @@
 
 ## Live Site
 
-🌐 **[View on GitHub Pages](https://your-username.github.io/your-repo-name)**
+🌐 **[View on GitHub Pages](https://navneet-20.github.io/SoftwareLicense.fyi/)**
 
 ---
 
