@@ -10,7 +10,7 @@ on:
       ai_provider:
         description: "AI Provider to use"
         required: true
-        default: "openai"
+        default: "gemini"
         type: choice
         options:
           - openai
