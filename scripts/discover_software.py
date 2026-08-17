@@ -19,7 +19,7 @@ from google import genai
 GEMINI_KEY   = os.getenv("GEMINI_API_KEY", "")
 CSV_PATH     = Path(__file__).parent.parent / "data" / "software_list.csv"
 NEW_PER_RUN  = 10
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-3.6-flash"
 
 VALID_CATEGORIES = [
     "Open Source",
