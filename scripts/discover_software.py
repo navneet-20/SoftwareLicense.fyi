@@ -1,7 +1,7 @@
 """
 discover_software.py
 AI-Powered Software License Directory — Auto Discovery
-Asks Gemini to suggest 100 new software tools not already in the CSV,
+Asks Gemini to suggest 25 new software tools not already in the CSV,
 verifies their license info, and appends them to software_list.csv.
 """
 
@@ -18,7 +18,7 @@ from google import genai
 # ── Config ─────────────────────────────────────────────────────────────────────
 GEMINI_KEY   = os.getenv("GEMINI_API_KEY", "")
 CSV_PATH     = Path(__file__).parent.parent / "data" / "software_list.csv"
-NEW_PER_RUN  = 100
+NEW_PER_RUN  = 25
 GEMINI_MODEL = "gemini-3.6-flash"
 
 VALID_CATEGORIES = [
@@ -56,8 +56,8 @@ The following software is ALREADY in our directory — do NOT suggest any of the
 {existing_str}
 
 Your task: Suggest exactly {NEW_PER_RUN} well-known software tools NOT in the list above.
-Pick from a variety of categories: developer tools, productivity apps, design tools,
-databases, security tools, communication tools, creative software, cloud tools, etc.
+Pick from different categories: developer, productivity, design, databases, 
+jdks, security tools, communication tools, creative software, cloud tools, etc.
 
 For each tool, classify into EXACTLY ONE of these license categories:
 1. "Open Source"            — Source available, free for all (MIT, GPL, Apache, etc.)
