@@ -1,7 +1,7 @@
 """
 discover_software.py
 AI-Powered Software License Directory — Auto Discovery
-Asks Gemini to suggest 25 new software tools not already in the CSV,
+Asks Gemini to suggest 10 new software tools not already in the CSV,
 verifies their license info, and appends them to software_list.csv.
 """
 
@@ -16,10 +16,12 @@ from pathlib import Path
 from google import genai
 
 # ── Config ─────────────────────────────────────────────────────────────────────
-GEMINI_KEY   = os.getenv("GEMINI_API_KEY", "")
-CSV_PATH     = Path(__file__).parent.parent / "data" / "software_list.csv"
-NEW_PER_RUN  = 25
+GEMINI_KEY  = os.getenv("GEMINI_API_KEY", "")
+CSV_PATH    = Path(__file__).parent.parent / "data" / "software_list.csv"
+NEW_PER_RUN  = 10
 GEMINI_MODEL = "gemini-3.6-flash"
+MAX_RETRIES  = 3
+RETRY_DELAY  = 30  # seconds between retries on 503
 
 VALID_CATEGORIES = [
     "Open Source",
@@ -29,15 +31,26 @@ VALID_CATEGORIES = [
     "Community Version",
 ]
 
-# ── Gemini client ──────────────────────────────────────────────────────────────
+# ── Gemini client (initialised once) ──────────────────────────────────────────
 client = genai.Client(api_key=GEMINI_KEY)
 
 def call_gemini(prompt: str) -> str:
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=prompt,
-    )
-    return response.text.strip().replace("```json", "").replace("```", "").strip()
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            response = client.models.generate_content(
+                model=GEMINI_MODEL,
+                contents=prompt,
+            )
+            return response.text.strip().replace("```json", "").replace("```", "").strip()
+        except Exception as e:
+            if "503" in str(e) or "UNAVAILABLE" in str(e):
+                if attempt < MAX_RETRIES:
+                    print(f"  [RETRY {attempt}/{MAX_RETRIES}] Gemini busy, waiting {RETRY_DELAY}s...")
+                    time.sleep(RETRY_DELAY)
+                else:
+                    raise
+            else:
+                raise
 
 
 # ── Load existing software names ───────────────────────────────────────────────
@@ -45,7 +58,7 @@ def load_existing_names(df: pd.DataFrame) -> list[str]:
     return [n.strip().lower() for n in df["Software Name"].dropna().tolist()]
 
 
-# ── Step 1: Ask Gemini to suggest 20 new tools ────────────────────────────────
+# ── Step 1: Ask Gemini to suggest 10 new tools ────────────────────────────────
 def discover_new_software(existing_names: list[str]) -> list[dict]:
     existing_str = "\n".join(f"- {n}" for n in existing_names)
 
@@ -56,8 +69,8 @@ The following software is ALREADY in our directory — do NOT suggest any of the
 {existing_str}
 
 Your task: Suggest exactly {NEW_PER_RUN} well-known software tools NOT in the list above.
-Pick from different categories: developer, productivity, design, databases, 
-jdks, security tools, communication tools, creative software, cloud tools, etc.
+Pick from a variety of categories: developer tools, productivity apps, design tools,
+databases, security tools, communication tools, creative software, cloud tools, etc.
 
 For each tool, classify into EXACTLY ONE of these license categories:
 1. "Open Source"            — Source available, free for all (MIT, GPL, Apache, etc.)
@@ -90,7 +103,7 @@ Return ONLY a valid JSON array, no markdown, no explanation:
         return []
 
 
-# ── Step 2: Verify each suggestion ────────────────────────────────────────────
+# ── Step 2: Verify each suggestion with a second Gemini call ──────────────────
 def verify_software(name: str, url: str) -> dict | None:
     prompt = f"""
 Verify the current licensing status of "{name}" (official site: {url}).
@@ -120,7 +133,7 @@ Return ONLY valid JSON, no markdown:
         return None
 
 
-# ── Step 3: Check URL reachability ────────────────────────────────────────────
+# ── Step 3: Check URL is reachable ────────────────────────────────────────────
 def is_url_reachable(url: str, timeout: int = 8) -> bool:
     try:
         resp = requests.head(url, timeout=timeout, allow_redirects=True)
@@ -145,11 +158,13 @@ def run():
     print(f"\n📋 Existing entries: {len(df)}")
     print(f"🔍 Asking Gemini to suggest {NEW_PER_RUN} new tools...\n")
 
+    # Step 1: Get suggestions
     suggestions = discover_new_software(existing_names)
     if not suggestions:
         print("[EXIT] No suggestions returned. Exiting.")
         sys.exit(0)
 
+    # Step 2: Filter duplicates & verify
     new_rows = []
     for s in suggestions:
         name = s.get("software_name", "").strip()
@@ -167,7 +182,7 @@ def run():
 
         verified = verify_software(name, url)
         if not verified:
-            verified = s
+            verified = s  # Fall back to suggestion data
 
         category = verified.get("category", "Community Version")
         if category not in VALID_CATEGORIES:
@@ -187,12 +202,14 @@ def run():
         print(f"    ✅ {category} | {new_row['License Status']} (confidence: {confidence})")
         new_rows.append(new_row)
         existing_names.append(name.lower())
-        time.sleep(1.5)
+
+        time.sleep(1.5)  # Respect rate limits
 
     if not new_rows:
         print("\n[INFO] No new software to add this run.")
         sys.exit(0)
 
+    # Step 3: Append to CSV
     new_df = pd.DataFrame(new_rows)
     updated_df = pd.concat([df, new_df], ignore_index=True)
     updated_df.to_csv(CSV_PATH, index=False)
