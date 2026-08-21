@@ -1,362 +1,468 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SoftwareLicense.fyi — Know Before You Ship</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- ── SEO ── -->
+  <title>IsItFree? — Software License Directory | Free, Paid & Open Source Tools</title>
+  <meta name="description" content="IsItFree? is an AI-powered, community-maintained directory of 130+ software tools. Instantly check if software is free, open source, requires a license, or has a community edition."/>
+  <meta name="keywords" content="software license checker, is software free, open source software, free software list, software licensing, SaaS pricing, free for home use, community edition software"/>
+  <meta name="author" content="Navneet Kumar"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://isitfree.webline.cloud/"/>
+
+  <!-- ── Open Graph (WhatsApp, LinkedIn, Facebook previews) ── -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://isitfree.webline.cloud/"/>
+  <meta property="og:title" content="IsItFree? — Know Your Software License Before You Ship"/>
+  <meta property="og:description" content="AI-verified directory of 130+ software tools. Check if any software is free, open source, or requires a commercial license."/>
+  <meta property="og:site_name" content="IsItFree?"/>
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="IsItFree? — Software License Directory"/>
+  <meta name="twitter:description" content="AI-verified directory of 130+ software tools. Instantly check licensing status."/>
+
+  <!-- ── Schema.org Structured Data ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "IsItFree?",
+    "url": "https://isitfree.webline.cloud",
+    "description": "AI-powered software license directory. Check if software is free, open source, or requires a commercial license.",
+    "author": { "@type": "Person", "name": "Navneet Kumar", "url": "https://github.com/navneet-20" },
+    "potentialAction": { "@type": "SearchAction", "target": "https://isitfree.webline.cloud/directory.html?q={search_term_string}", "query-input": "required name=search_term_string" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
   <style>
-    /* ── Tokens ───────────────────────────────────────────── */
     :root {
-      --bg:         #0f1117;
-      --surface:    #181c27;
-      --surface2:   #1e2333;
-      --border:     #2a3045;
-      --text:       #e2e8f0;
-      --muted:      #7a8599;
-      --accent:     #4f9eff;
-
-      /* Category colours */
-      --c-oss:   #22d3a5;   /* teal   — Open Source        */
-      --c-home:  #a78bfa;   /* violet — Free for Home      */
-      --c-paid:  #f87171;   /* red    — License Required   */
-      --c-comm:  #fb923c;   /* amber  — License Commercial */
-      --c-ce:    #38bdf8;   /* sky    — Community Version  */
-
-      --radius: 6px;
+      --bg:       #0b0e18;
+      --surface:  #131726;
+      --surface2: #1a2035;
+      --border:   #252d45;
+      --text:     #edf2f7;
+      --muted:    #6b7a99;
+      --accent:   #4f9eff;
+      --accent2:  #7c6dff;
+      --c-oss:    #22d3a5;
+      --c-home:   #a78bfa;
+      --c-paid:   #f87171;
+      --c-comm:   #fb923c;
+      --c-ce:     #38bdf8;
+      --radius:   8px;
       --font-mono: "IBM Plex Mono", monospace;
       --font-body: "Inter", system-ui, sans-serif;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.7; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      min-height: 100vh;
-      line-height: 1.6;
-    }
-
-    /* ── Header ───────────────────────────────────────────── */
-    header {
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11,14,24,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 1.5rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; gap: 1rem;
     }
+    .nav-logo { font-family: var(--font-mono); font-size: 1.15rem; font-weight: 600; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-cta { background: var(--accent); color: #fff !important; border-radius: var(--radius); padding: 0.4rem 1rem; font-size: 0.85rem !important; font-weight: 600 !important; transition: opacity 0.15s !important; }
+    .nav-cta:hover { opacity: 0.85; text-decoration: none !important; }
+    .nav-meta { font-size: 0.75rem; color: var(--muted); font-family: var(--font-mono); }
 
-    .logo {
-      font-family: var(--font-mono);
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-    .logo span { color: var(--accent); }
+    /* ── PAGES ── */
+    .page { display: none; }
+    .page.active { display: block; }
 
-    .header-meta {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-family: var(--font-mono);
-    }
-
-    /* ── Hero ─────────────────────────────────────────────── */
-    .hero {
-      padding: 3.5rem 2rem 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 600;
-      line-height: 1.2;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.75rem;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 1rem;
-      max-width: 520px;
-      margin-bottom: 2rem;
-    }
-
-    /* ── Controls ─────────────────────────────────────────── */
-    .controls {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem 1.5rem;
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .search-wrap {
-      flex: 1;
-      min-width: 220px;
-      position: relative;
-    }
-
-    .search-wrap svg {
-      position: absolute;
-      left: 0.875rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      pointer-events: none;
-    }
-
-    input[type="search"], select {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 0.875rem;
-      padding: 0.6rem 0.875rem;
-      outline: none;
-      transition: border-color 0.15s;
-      width: 100%;
-    }
-
-    input[type="search"] { padding-left: 2.25rem; }
-
-    input[type="search"]:focus,
-    select:focus {
-      border-color: var(--accent);
-    }
-
-    select {
-      appearance: none;
-      cursor: pointer;
-      min-width: 180px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8599' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.75rem center;
-      padding-right: 2rem;
-    }
-
-    /* ── Category Legend ──────────────────────────────────── */
-    .legend {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.2rem 0.65rem;
-      border-radius: 99px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      font-family: var(--font-mono);
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-      cursor: default;
-    }
-
-    .badge-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .badge.oss    { background: color-mix(in srgb, var(--c-oss)  12%, transparent); color: var(--c-oss);  border: 1px solid color-mix(in srgb, var(--c-oss)  30%, transparent); }
-    .badge.home   { background: color-mix(in srgb, var(--c-home) 12%, transparent); color: var(--c-home); border: 1px solid color-mix(in srgb, var(--c-home) 30%, transparent); }
-    .badge.paid   { background: color-mix(in srgb, var(--c-paid) 12%, transparent); color: var(--c-paid); border: 1px solid color-mix(in srgb, var(--c-paid) 30%, transparent); }
-    .badge.comm   { background: color-mix(in srgb, var(--c-comm) 12%, transparent); color: var(--c-comm); border: 1px solid color-mix(in srgb, var(--c-comm) 30%, transparent); }
-    .badge.ce     { background: color-mix(in srgb, var(--c-ce)   12%, transparent); color: var(--c-ce);   border: 1px solid color-mix(in srgb, var(--c-ce)   30%, transparent); }
-
-    /* ── Table ────────────────────────────────────────────── */
-    .table-wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem 4rem;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.875rem;
-    }
-
-    thead th {
-      text-align: left;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.6rem 1rem;
-      border-bottom: 1px solid var(--border);
-      user-select: none;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    thead th:hover { color: var(--text); }
-
-    thead th .sort-icon { margin-left: 4px; opacity: 0.4; font-style: normal; }
-    thead th.asc  .sort-icon { opacity: 1; }
-    thead th.desc .sort-icon { opacity: 1; }
-
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background 0.1s;
-    }
-
-    tbody tr:hover { background: var(--surface); }
-
-    td {
-      padding: 0.85rem 1rem;
-      vertical-align: middle;
-    }
-
-    td.name-cell {
-      font-weight: 500;
-    }
-
-    td.name-cell a {
-      color: var(--text);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    td.name-cell a:hover { color: var(--accent); }
-
-    td.name-cell a svg { flex-shrink: 0; color: var(--muted); }
-
-    td.notes-cell {
-      color: var(--muted);
-      font-size: 0.8rem;
-      max-width: 280px;
-    }
-
-    td.date-cell {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    /* ── Empty / Loading ──────────────────────────────────── */
-    .state-msg {
+    /* ── HOME PAGE ── */
+    .home-hero {
+      max-width: 860px; margin: 0 auto;
+      padding: 6rem 2rem 4rem;
       text-align: center;
-      padding: 4rem 2rem;
-      color: var(--muted);
-      font-size: 0.9rem;
     }
-
-    /* ── Pagination ───────────────────────────────────────── */
-    .pagination {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-      font-size: 0.8rem;
-      color: var(--muted);
+    .home-hero .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      color: var(--accent); font-size: 0.8rem; font-weight: 600;
+      font-family: var(--font-mono); padding: 0.3rem 0.85rem;
+      border-radius: 99px; margin-bottom: 1.5rem; letter-spacing: 0.04em;
     }
+    .home-hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700; line-height: 1.15;
+      letter-spacing: -0.04em; margin-bottom: 1.25rem;
+    }
+    .home-hero h1 em { font-style: normal; color: var(--accent); }
+    .home-hero p {
+      font-size: 1.15rem; color: var(--muted);
+      max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.8;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius); font-family: var(--font-body);
+      font-size: 1rem; font-weight: 600; padding: 0.8rem 1.75rem;
+      cursor: pointer; transition: opacity 0.15s; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary:hover { opacity: 0.85; text-decoration: none; }
+    .btn-secondary {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      font-family: var(--font-body); font-size: 1rem; font-weight: 500;
+      padding: 0.8rem 1.75rem; cursor: pointer; transition: border-color 0.15s;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-secondary:hover { border-color: var(--accent); text-decoration: none; }
 
-    .page-btns { display: flex; gap: 0.35rem; }
+    /* Stats bar */
+    .stats-bar {
+      max-width: 700px; margin: 4rem auto 0;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+    }
+    .stat { background: var(--surface); padding: 1.5rem; text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 700; font-family: var(--font-mono); color: var(--accent); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
 
-    .page-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--muted);
-      cursor: pointer;
+    /* Features */
+    .features {
+      max-width: 860px; margin: 5rem auto;
+      padding: 0 2rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: var(--accent); }
+    .feature-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+    .feature-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .feature-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+    /* Categories section */
+    .section { max-width: 860px; margin: 0 auto 5rem; padding: 0 2rem; }
+    .section-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .section-sub { color: var(--muted); font-size: 1rem; margin-bottom: 2rem; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .cat-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.25rem 1.5rem; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .cat-card:hover { background: var(--surface); }
+    .cat-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .cat-desc { font-size: 0.8rem; color: var(--muted); }
+
+    /* Updates / blog section */
+    .updates { max-width: 860px; margin: 0 auto 5rem; padding: 0 2rem; }
+    .update-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem 1.75rem;
+      margin-bottom: 1rem; display: flex; gap: 1.5rem; align-items: flex-start;
+    }
+    .update-date { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); white-space: nowrap; padding-top: 0.2rem; min-width: 80px; }
+    .update-content h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .update-content p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; }
+    .update-tag { display: inline-block; font-size: 0.7rem; font-weight: 600; font-family: var(--font-mono); padding: 0.15rem 0.5rem; border-radius: 99px; margin-bottom: 0.4rem; }
+    .tag-new { background: color-mix(in srgb, var(--c-oss) 15%, transparent); color: var(--c-oss); }
+    .tag-fix { background: color-mix(in srgb, var(--c-comm) 15%, transparent); color: var(--c-comm); }
+    .tag-update { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
+
+    /* Author */
+    .author-section {
+      max-width: 860px; margin: 0 auto 5rem; padding: 0 2rem;
+    }
+    .author-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;
+    }
+    .author-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.75rem; font-weight: 700; color: #fff; flex-shrink: 0;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
-      padding: 0.3rem 0.65rem;
-      transition: all 0.1s;
     }
-
-    .page-btn:hover, .page-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
+    .author-info h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .author-info p { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .author-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .author-link {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.82rem; font-weight: 500; color: var(--muted);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 0.3rem 0.75rem; text-decoration: none; transition: all 0.15s;
     }
+    .author-link:hover { color: var(--text); border-color: var(--accent); text-decoration: none; }
 
-    .page-btn:disabled {
-      opacity: 0.3;
-      cursor: default;
+    /* ── DIRECTORY PAGE ── */
+    .dir-hero { max-width: 960px; margin: 0 auto; padding: 3rem 2rem 1.5rem; }
+    .dir-hero h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .dir-hero p { color: var(--muted); font-size: 1rem; }
+    .controls { max-width: 960px; margin: 0 auto; padding: 1rem 2rem 1.25rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .search-wrap { flex: 1; min-width: 220px; position: relative; }
+    .search-wrap svg { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    input[type="search"], input[type="text"], input[type="url"], select, textarea {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      color: var(--text); font-family: var(--font-body); font-size: 0.95rem;
+      padding: 0.65rem 0.875rem; outline: none; transition: border-color 0.15s; width: 100%;
     }
+    input[type="search"] { padding-left: 2.4rem; font-size: 0.95rem; }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    select { appearance: none; cursor: pointer; min-width: 190px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7a99' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem; }
 
-    /* ── Footer ───────────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 1.5rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
+    .legend { max-width: 960px; margin: 0 auto; padding: 0 2rem 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.7rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; font-family: var(--font-mono); white-space: nowrap; }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .badge.oss  { background: color-mix(in srgb,var(--c-oss) 12%,transparent); color:var(--c-oss);  border:1px solid color-mix(in srgb,var(--c-oss) 30%,transparent); }
+    .badge.home { background: color-mix(in srgb,var(--c-home)12%,transparent); color:var(--c-home); border:1px solid color-mix(in srgb,var(--c-home)30%,transparent); }
+    .badge.paid { background: color-mix(in srgb,var(--c-paid)12%,transparent); color:var(--c-paid); border:1px solid color-mix(in srgb,var(--c-paid)30%,transparent); }
+    .badge.comm { background: color-mix(in srgb,var(--c-comm)12%,transparent); color:var(--c-comm); border:1px solid color-mix(in srgb,var(--c-comm)30%,transparent); }
+    .badge.ce   { background: color-mix(in srgb,var(--c-ce)  12%,transparent); color:var(--c-ce);   border:1px solid color-mix(in srgb,var(--c-ce)  30%,transparent); }
 
-    footer a { color: var(--muted); text-decoration: underline; }
+    .table-wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem 5rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    thead th { text-align: left; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer; white-space: nowrap; user-select: none; }
+    thead th:hover { color: var(--text); }
+    thead th .sort-icon { margin-left: 4px; opacity: 0.4; }
+    thead th.asc .sort-icon, thead th.desc .sort-icon { opacity: 1; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+    tbody tr:hover { background: var(--surface); }
+    td { padding: 1rem 1rem; vertical-align: middle; font-size: 0.95rem; }
+    td.name-cell { font-weight: 600; font-size: 1rem; }
+    td.name-cell a { color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; }
+    td.name-cell a:hover { color: var(--accent); }
+    td.name-cell a svg { flex-shrink: 0; color: var(--muted); }
+    td.notes-cell { color: var(--muted); font-size: 0.875rem; max-width: 280px; }
+    td.date-cell { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+    .state-msg { text-align: center; padding: 4rem 2rem; color: var(--muted); font-size: 1rem; }
+    .pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); }
+    .page-btns { display: flex; gap: 0.35rem; }
+    .page-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--muted); cursor: pointer; font-family: var(--font-mono); font-size: 0.78rem; padding: 0.35rem 0.75rem; transition: all 0.1s; }
+    .page-btn:hover, .page-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .page-btn:disabled { opacity: 0.3; cursor: default; }
 
-    .disclaimer {
-      max-width: 600px;
-      font-style: italic;
-      line-height: 1.5;
-    }
+    /* ── MODAL ── */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; width: 100%; max-width: 500px; position: relative; }
+    .modal h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .modal p.modal-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; }
+    .modal-close:hover { color: var(--text); }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 0.35rem; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-group textarea { resize: vertical; min-height: 70px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .submit-btn { width: 100%; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); font-family: var(--font-body); font-size: 1rem; font-weight: 600; padding: 0.8rem; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.15s; }
+    .submit-btn:hover { opacity: 0.85; }
+    .submit-btn:disabled { opacity: 0.5; cursor: default; }
+    .form-msg { font-size: 0.85rem; margin-top: 0.75rem; text-align: center; min-height: 1.2em; }
+    .form-msg.success { color: var(--c-oss); }
+    .form-msg.error   { color: var(--c-paid); }
 
-    /* ── Responsive ───────────────────────────────────────── */
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 2rem; display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--muted); max-width: 100%; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--text); }
+    .disclaimer { max-width: 580px; line-height: 1.6; font-style: italic; }
+    .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; text-align: right; }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
-      header { padding: 1rem; }
-      .hero, .controls, .legend, .table-wrap { padding-left: 1rem; padding-right: 1rem; }
-      td.notes-cell { display: none; }
-      td.date-cell  { display: none; }
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .home-hero { padding: 4rem 1rem 2rem; }
+      .home-hero h1 { font-size: 2rem; }
+      .stats-bar { grid-template-columns: 1fr; }
+      .features, .section, .updates, .author-section { padding: 0 1rem; }
+      .dir-hero, .controls, .legend, .table-wrap { padding-left: 1rem; padding-right: 1rem; }
+      td.notes-cell, td.date-cell { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .author-card { flex-direction: column; }
+      .footer-right { align-items: flex-start; text-align: left; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <a class="logo" href="#">Software<span>License</span>.fyi</a>
-  <div class="header-meta" id="lastUpdatedHeader">Checking data…</div>
-</header>
+<!-- ── NAVIGATION ── -->
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">Is<span>It</span>Free?</a>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home')" id="nav-home">Home</a>
+    <a href="#" onclick="showPage('directory')" id="nav-directory">Directory</a>
+    <a href="https://github.com/navneet-20/SoftwareLicense.fyi" target="_blank" rel="noopener">GitHub</a>
+    <a href="#" class="nav-cta" onclick="showPage('directory');openModal()">+ Suggest</a>
+  </div>
+  <div class="nav-meta" id="navMeta"></div>
+</nav>
 
-<main>
-  <section class="hero">
-    <h1>Know your license <em>before</em> you ship.</h1>
-    <p>A community-maintained, AI-verified directory of software licensing rules across 5 categories — updated automatically every week.</p>
+<!-- ══════════════════════════════════════════════════════
+     HOME PAGE
+══════════════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <section class="home-hero">
+    <div class="eyebrow">🤖 AI-Verified · Updated Daily</div>
+    <h1>Is it <em>actually</em> free<br/>to use?</h1>
+    <p>The AI-powered software license directory. Instantly check whether any tool is open source, free for home use, requires a paid license, or has a community edition.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showPage('directory')">Browse Directory →</button>
+      <a class="btn-secondary" href="https://github.com/navneet-20/SoftwareLicense.fyi" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+    </div>
+
+    <div class="stats-bar" id="statsBar">
+      <div class="stat"><div class="stat-num" id="statEntries">—</div><div class="stat-label">Software entries</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">License categories</div></div>
+      <div class="stat"><div class="stat-num">Daily</div><div class="stat-label">AI auto-updates</div></div>
+    </div>
   </section>
+
+  <!-- Features -->
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3>Instant Search</h3>
+      <p>Search 130+ software tools by name, category, or license type. Real-time filtering with no page reload.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤖</div>
+      <h3>AI-Verified Daily</h3>
+      <p>Gemini AI automatically discovers and verifies 10 new software tools every day, keeping the directory fresh.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚖️</div>
+      <h3>5 License Categories</h3>
+      <p>Clear classification into Open Source, Free for Home, License Required, Commercial License, and Community Edition.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <h3>Open & Free</h3>
+      <p>Fully open source on GitHub. Anyone can contribute, suggest software, or self-host their own instance.</p>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <div class="section">
+    <h2 class="section-title">Browse by Category</h2>
+    <p class="section-sub">Click any category to filter the directory instantly.</p>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="showPage('directory');filterByCategory('Open Source')" style="border-left:3px solid var(--c-oss)">
+        <div class="cat-name" style="color:var(--c-oss)">🟢 Open Source</div>
+        <div class="cat-desc">Free for all use — source code available under MIT, GPL, Apache, etc.</div>
+      </div>
+      <div class="cat-card" onclick="showPage('directory');filterByCategory('Free for Home')" style="border-left:3px solid var(--c-home)">
+        <div class="cat-name" style="color:var(--c-home)">🟣 Free for Home</div>
+        <div class="cat-desc">Free for personal use only. Commercial use requires a paid plan.</div>
+      </div>
+      <div class="cat-card" onclick="showPage('directory');filterByCategory('License Required')" style="border-left:3px solid var(--c-paid)">
+        <div class="cat-name" style="color:var(--c-paid)">🔴 License Required</div>
+        <div class="cat-desc">A paid license is required for any type of use.</div>
+      </div>
+      <div class="cat-card" onclick="showPage('directory');filterByCategory('License for Commercial')" style="border-left:3px solid var(--c-comm)">
+        <div class="cat-name" style="color:var(--c-comm)">🟠 License for Commercial</div>
+        <div class="cat-desc">Free personally, but business use requires purchasing a license.</div>
+      </div>
+      <div class="cat-card" onclick="showPage('directory');filterByCategory('Community Version')" style="border-left:3px solid var(--c-ce)">
+        <div class="cat-name" style="color:var(--c-ce)">🔵 Community Version</div>
+        <div class="cat-desc">Free community edition available alongside paid enterprise tiers.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What's New / Updates -->
+  <div class="updates">
+    <h2 class="section-title">What's New</h2>
+    <p class="section-sub">Latest updates to the directory and project.</p>
+
+    <div class="update-card">
+      <div class="update-date">Aug 2026</div>
+      <div class="update-content">
+        <span class="update-tag tag-new">NEW</span>
+        <h4>Daily AI Discovery Launched</h4>
+        <p>Gemini AI now automatically discovers and adds 10 new software tools to the directory every day at 1:30 PM IST. No manual work required.</p>
+      </div>
+    </div>
+    <div class="update-card">
+      <div class="update-date">Aug 2026</div>
+      <div class="update-content">
+        <span class="update-tag tag-update">UPDATE</span>
+        <h4>Upgraded to Gemini 3.6 Flash</h4>
+        <p>Switched to the latest Gemini model for faster and more accurate license verification. Added retry logic for high-demand periods.</p>
+      </div>
+    </div>
+    <div class="update-card">
+      <div class="update-date">Aug 2026</div>
+      <div class="update-content">
+        <span class="update-tag tag-new">LAUNCH</span>
+        <h4>IsItFree? Goes Live</h4>
+        <p>The AI-powered software license directory launched on <a href="https://isitfree.webline.cloud">isitfree.webline.cloud</a> with 25 initial entries across all 5 license categories.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Author -->
+  <div class="author-section">
+    <h2 class="section-title">Built by</h2>
+    <div class="author-card">
+      <div class="author-avatar">NK</div>
+      <div class="author-info">
+        <h3>Navneet Kumar</h3>
+        <p>Building IsItFree? to make software licensing transparent and accessible for developers, teams, and businesses worldwide.</p>
+        <div class="author-links">
+          <a class="author-link" href="https://github.com/navneet-20" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a class="author-link" href="https://github.com/navneet-20/SoftwareLicense.fyi" target="_blank" rel="noopener">
+            📁 View Source
+          </a>
+          <a class="author-link" href="https://github.com/navneet-20/SoftwareLicense.fyi/issues/new" target="_blank" rel="noopener">
+            💡 Suggest Software
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #page-home -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTORY PAGE
+══════════════════════════════════════════════════════ -->
+<div class="page" id="page-directory">
+
+  <div class="dir-hero">
+    <h1>Software License Directory</h1>
+    <p>AI-verified licensing info for <span id="entryCount">—</span> software tools. Updated daily.</p>
+  </div>
 
   <div class="controls">
     <div class="search-wrap">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="search" id="searchInput" placeholder="Search software…" aria-label="Search software" />
+      <input type="search" id="searchInput" placeholder="Search software…" aria-label="Search"/>
     </div>
     <select id="categoryFilter" aria-label="Filter by category">
       <option value="">All categories</option>
@@ -366,9 +472,10 @@
       <option value="License for Commercial">License for Commercial</option>
       <option value="Community Version">Community Version</option>
     </select>
+    <button class="btn-primary" onclick="openModal()" style="padding:0.6rem 1.1rem;font-size:0.9rem">+ Suggest</button>
   </div>
 
-  <div class="legend" aria-label="Category legend">
+  <div class="legend">
     <span class="badge oss"><span class="badge-dot" style="background:var(--c-oss)"></span>Open Source</span>
     <span class="badge home"><span class="badge-dot" style="background:var(--c-home)"></span>Free for Home</span>
     <span class="badge paid"><span class="badge-dot" style="background:var(--c-paid)"></span>License Required</span>
@@ -384,210 +491,218 @@
           <th data-col="Software Name">Software <span class="sort-icon">↕</span></th>
           <th data-col="Category">Category <span class="sort-icon">↕</span></th>
           <th data-col="License Status">Status <span class="sort-icon">↕</span></th>
-          <th data-col="Notes" class="hide-mobile">Notes</th>
-          <th data-col="Last Updated" class="hide-mobile">Updated <span class="sort-icon">↕</span></th>
+          <th data-col="Notes">Notes</th>
+          <th data-col="Last Updated">Updated <span class="sort-icon">↕</span></th>
         </tr>
       </thead>
       <tbody id="tableBody"></tbody>
     </table>
     <div id="emptyMsg" class="state-msg" style="display:none">No matching software found.</div>
-
     <div class="pagination" id="pagination" style="display:none">
       <span id="pageInfo"></span>
       <div class="page-btns" id="pageBtns"></div>
     </div>
   </div>
-</main>
 
+</div><!-- end #page-directory -->
+
+
+<!-- ── FOOTER ── -->
 <footer>
-  <p class="disclaimer">
-    ⚠️ License data is verified by AI and updated weekly. Always confirm licensing terms on the official website before commercial use. This directory is for informational purposes only.
-  </p>
-  <p id="footerMeta"></p>
+  <p class="disclaimer">⚠️ License data is AI-verified and updated daily. Always confirm terms on the official website before commercial use. For informational purposes only.</p>
+  <div class="footer-right">
+    <span id="footerMeta"></span>
+    <span>Built by <a href="https://github.com/navneet-20" target="_blank">Navneet Kumar</a> · <a href="https://github.com/navneet-20/SoftwareLicense.fyi" target="_blank">Source on GitHub</a></span>
+  </div>
 </footer>
 
+
+<!-- ── SUGGEST MODAL ── -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>Suggest a Software</h2>
+    <p class="modal-sub">We'll review your suggestion and add it after verification. A GitHub token with <code>public_repo</code> scope is needed to open the issue — <a href="https://github.com/settings/tokens/new?scopes=public_repo&description=IsItFree+Suggest" target="_blank">generate one here</a>.</p>
+    <div class="form-group"><label>Software Name *</label><input type="text" id="f-name" placeholder="e.g. Figma"/></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Category *</label>
+        <select id="f-category">
+          <option value="">Select…</option>
+          <option>Open Source</option><option>Free for Home</option>
+          <option>License Required</option><option>License for Commercial</option>
+          <option>Community Version</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Official URL *</label><input type="url" id="f-url" placeholder="https://example.com"/></div>
+    </div>
+    <div class="form-group"><label>Notes (optional)</label><textarea id="f-notes" placeholder="Brief licensing description…"></textarea></div>
+    <div class="form-group"><label>GitHub Token *</label><input type="text" id="f-token" placeholder="ghp_xxxxxxxxxxxx"/></div>
+    <button class="submit-btn" id="submitBtn" onclick="submitSuggestion()">Submit Suggestion →</button>
+    <p class="form-msg" id="formMsg"></p>
+  </div>
+</div>
+
+
 <script>
-  // ── Config ──────────────────────────────────────────────
-  const CSV_URL      = "data/software_list.csv";
-  const PAGE_SIZE    = 12;
+  // ── Config ───────────────────────────────────────────────
+  const CSV_URL     = "data/software_list.csv";
+  const PAGE_SIZE   = 15;
+  const GITHUB_REPO = "navneet-20/SoftwareLicense.fyi";
 
-  // ── State ───────────────────────────────────────────────
-  let allRows    = [];
-  let filtered   = [];
-  let sortCol    = "Software Name";
-  let sortAsc    = true;
-  let currentPage = 1;
+  // ── State ────────────────────────────────────────────────
+  let allRows = [], filtered = [], sortCol = "Software Name", sortAsc = true, currentPage = 1;
 
-  // ── Category → badge class ───────────────────────────────
   const CAT_CLASS = {
-    "Open Source":            "oss",
-    "Free for Home":          "home",
-    "License Required":       "paid",
-    "License for Commercial": "comm",
-    "Community Version":      "ce",
+    "Open Source":"oss","Free for Home":"home",
+    "License Required":"paid","License for Commercial":"comm","Community Version":"ce"
   };
+  const CAT_COLORS = { oss:"var(--c-oss)",home:"var(--c-home)",paid:"var(--c-paid)",comm:"var(--c-comm)",ce:"var(--c-ce)" };
+
+  // ── Page routing ─────────────────────────────────────────
+  function showPage(name) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById("page-" + name).classList.add("active");
+    document.querySelectorAll(".nav-links a[id^='nav-']").forEach(a => a.classList.remove("active"));
+    const navEl = document.getElementById("nav-" + name);
+    if (navEl) navEl.classList.add("active");
+    window.scrollTo(0, 0);
+    if (name === "directory" && allRows.length > 0) applyFilter();
+  }
+
+  function filterByCategory(cat) {
+    document.getElementById("categoryFilter").value = cat;
+    applyFilter();
+  }
 
   // ── CSV Parser ───────────────────────────────────────────
   function parseCSV(text) {
-    const lines  = text.trim().split("\n");
-    const headers = lines[0].split(",").map(h => h.trim().replace(/^"|"$/g, ""));
+    const lines = text.trim().split("\n");
+    const headers = lines[0].split(",").map(h => h.trim().replace(/^"|"$/g,""));
     return lines.slice(1).map(line => {
-      // Handle quoted fields with commas
-      const cols = [];
-      let cur = "", inQ = false;
-      for (const ch of line) {
-        if (ch === '"') { inQ = !inQ; }
-        else if (ch === "," && !inQ) { cols.push(cur.trim()); cur = ""; }
-        else { cur += ch; }
-      }
+      const cols=[]; let cur="",inQ=false;
+      for(const ch of line){ if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){cols.push(cur.trim());cur="";}else{cur+=ch;} }
       cols.push(cur.trim());
-      const row = {};
-      headers.forEach((h, i) => row[h] = (cols[i] || "").replace(/^"|"$/g, ""));
+      const row={};
+      headers.forEach((h,i)=>row[h]=(cols[i]||"").replace(/^"|"$/g,""));
       return row;
     });
   }
 
-  // ── Render badge ─────────────────────────────────────────
   function makeBadge(category) {
-    const cls  = CAT_CLASS[category] || "ce";
-    const color = { oss:"var(--c-oss)", home:"var(--c-home)", paid:"var(--c-paid)", comm:"var(--c-comm)", ce:"var(--c-ce)" }[cls];
-    return `<span class="badge ${cls}"><span class="badge-dot" style="background:${color}"></span>${category}</span>`;
+    const cls = CAT_CLASS[category]||"ce";
+    return `<span class="badge ${cls}"><span class="badge-dot" style="background:${CAT_COLORS[cls]}"></span>${category}</span>`;
   }
 
-  // ── Render table ─────────────────────────────────────────
+  // ── Table render ─────────────────────────────────────────
   function renderTable() {
-    const tbody = document.getElementById("tableBody");
-    const emptyMsg = document.getElementById("emptyMsg");
-    const table    = document.getElementById("mainTable");
-    const pag      = document.getElementById("pagination");
-
-    if (filtered.length === 0) {
-      table.style.display = "none";
-      emptyMsg.style.display = "block";
-      pag.style.display = "none";
-      return;
-    }
-
-    emptyMsg.style.display = "none";
-    table.style.display = "table";
-
-    const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-    const start = (currentPage - 1) * PAGE_SIZE;
-    const pageRows = filtered.slice(start, start + PAGE_SIZE);
-
-    tbody.innerHTML = pageRows.map(r => {
-      const url  = r["Official URL"] || "#";
-      const name = r["Software Name"] || "—";
-      const link = url !== "#"
-        ? `<a href="${url}" target="_blank" rel="noopener noreferrer">
-             ${name}
-             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-           </a>`
-        : name;
-
-      return `<tr>
-        <td class="name-cell">${link}</td>
-        <td>${makeBadge(r["Category"])}</td>
-        <td>${r["License Status"] || "—"}</td>
-        <td class="notes-cell">${r["Notes"] || "—"}</td>
-        <td class="date-cell">${r["Last Updated"] || "—"}</td>
-      </tr>`;
+    const tbody=document.getElementById("tableBody"),emptyMsg=document.getElementById("emptyMsg"),
+          table=document.getElementById("mainTable"),pag=document.getElementById("pagination");
+    if(!filtered.length){table.style.display="none";emptyMsg.style.display="block";pag.style.display="none";return;}
+    emptyMsg.style.display="none";table.style.display="table";
+    const totalPages=Math.ceil(filtered.length/PAGE_SIZE),start=(currentPage-1)*PAGE_SIZE;
+    tbody.innerHTML=filtered.slice(start,start+PAGE_SIZE).map(r=>{
+      const url=r["Official URL"]||"#",name=r["Software Name"]||"—";
+      const link=url!=="#"
+        ?`<a href="${url}" target="_blank" rel="noopener">${name}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`
+        :name;
+      return `<tr><td class="name-cell">${link}</td><td>${makeBadge(r["Category"])}</td><td>${r["License Status"]||"—"}</td><td class="notes-cell">${r["Notes"]||"—"}</td><td class="date-cell">${r["Last Updated"]||"—"}</td></tr>`;
     }).join("");
-
-    // Pagination
-    const pageInfo = document.getElementById("pageInfo");
-    pageInfo.textContent = `${start + 1}–${Math.min(start + PAGE_SIZE, filtered.length)} of ${filtered.length} entries`;
-
-    const btns = document.getElementById("pageBtns");
-    btns.innerHTML = "";
-
-    const addBtn = (label, page, disabled = false) => {
-      const b = document.createElement("button");
-      b.className = "page-btn" + (page === currentPage ? " active" : "");
-      b.textContent = label;
-      b.disabled = disabled;
-      b.onclick = () => { currentPage = page; renderTable(); };
+    document.getElementById("pageInfo").textContent=`${start+1}–${Math.min(start+PAGE_SIZE,filtered.length)} of ${filtered.length} entries`;
+    const btns=document.getElementById("pageBtns");btns.innerHTML="";
+    const addBtn=(label,page,disabled=false)=>{
+      const b=document.createElement("button");
+      b.className="page-btn"+(page===currentPage?" active":"");
+      b.textContent=label;b.disabled=disabled;
+      b.onclick=()=>{currentPage=page;renderTable();};
       btns.appendChild(b);
     };
-
-    addBtn("←", currentPage - 1, currentPage === 1);
-    for (let p = 1; p <= totalPages; p++) {
-      if (totalPages <= 7 || p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1) {
-        addBtn(p, p);
-      } else if (Math.abs(p - currentPage) === 2) {
-        const sp = document.createElement("span");
-        sp.textContent = "…";
-        sp.style.cssText = "color:var(--muted);padding:0 4px;line-height:1.8";
-        btns.appendChild(sp);
-      }
+    addBtn("←",currentPage-1,currentPage===1);
+    for(let p=1;p<=totalPages;p++){
+      if(totalPages<=7||p===1||p===totalPages||Math.abs(p-currentPage)<=1)addBtn(p,p);
+      else if(Math.abs(p-currentPage)===2){const sp=document.createElement("span");sp.textContent="…";sp.style.cssText="color:var(--muted);padding:0 4px;line-height:1.8";btns.appendChild(sp);}
     }
-    addBtn("→", currentPage + 1, currentPage === totalPages);
-    pag.style.display = "flex";
+    addBtn("→",currentPage+1,currentPage===totalPages);
+    pag.style.display="flex";
   }
 
-  // ── Filter + Sort ─────────────────────────────────────────
   function applyFilter() {
-    const q   = document.getElementById("searchInput").value.toLowerCase();
-    const cat = document.getElementById("categoryFilter").value;
-
-    filtered = allRows.filter(r => {
-      const matchQ   = !q || Object.values(r).some(v => v.toLowerCase().includes(q));
-      const matchCat = !cat || r["Category"] === cat;
-      return matchQ && matchCat;
-    });
-
-    filtered.sort((a, b) => {
-      const va = (a[sortCol] || "").toLowerCase();
-      const vb = (b[sortCol] || "").toLowerCase();
-      return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
-    });
-
-    currentPage = 1;
-    renderTable();
+    const q=document.getElementById("searchInput").value.toLowerCase();
+    const cat=document.getElementById("categoryFilter").value;
+    filtered=allRows.filter(r=>(!q||Object.values(r).some(v=>v.toLowerCase().includes(q)))&&(!cat||r["Category"]===cat));
+    filtered.sort((a,b)=>{const va=(a[sortCol]||"").toLowerCase(),vb=(b[sortCol]||"").toLowerCase();return sortAsc?va.localeCompare(vb):vb.localeCompare(va);});
+    currentPage=1;renderTable();
   }
 
-  // ── Sort headers ──────────────────────────────────────────
-  document.querySelectorAll("thead th[data-col]").forEach(th => {
-    th.addEventListener("click", () => {
-      const col = th.dataset.col;
-      if (sortCol === col) { sortAsc = !sortAsc; }
-      else { sortCol = col; sortAsc = true; }
-
-      document.querySelectorAll("thead th").forEach(h => h.classList.remove("asc", "desc"));
-      th.classList.add(sortAsc ? "asc" : "desc");
-      applyFilter();
+  document.querySelectorAll("thead th[data-col]").forEach(th=>{
+    th.addEventListener("click",()=>{
+      const col=th.dataset.col;
+      if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=true;}
+      document.querySelectorAll("thead th").forEach(h=>h.classList.remove("asc","desc"));
+      th.classList.add(sortAsc?"asc":"desc");applyFilter();
     });
   });
+  document.getElementById("searchInput").addEventListener("input",applyFilter);
+  document.getElementById("categoryFilter").addEventListener("change",applyFilter);
 
-  // ── Search & filter events ────────────────────────────────
-  document.getElementById("searchInput").addEventListener("input", applyFilter);
-  document.getElementById("categoryFilter").addEventListener("change", applyFilter);
-
-  // ── Load CSV ──────────────────────────────────────────────
+  // ── Load CSV ─────────────────────────────────────────────
   async function loadData() {
     try {
-      const resp = await fetch(CSV_URL);
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const text = await resp.text();
-      allRows = parseCSV(text);
-
-      document.getElementById("loadingMsg").style.display = "none";
-
-      // Last-updated date from CSV
-      const dates = allRows.map(r => r["Last Updated"]).filter(Boolean).sort();
-      const lastDate = dates.at(-1) || "unknown";
-      document.getElementById("lastUpdatedHeader").textContent = `Last updated: ${lastDate}`;
-      document.getElementById("footerMeta").textContent = `${allRows.length} entries · AI-verified · ${lastDate}`;
-
+      const resp=await fetch(CSV_URL);
+      if(!resp.ok)throw new Error(`HTTP ${resp.status}`);
+      allRows=parseCSV(await resp.text());
+      document.getElementById("loadingMsg").style.display="none";
+      const dates=allRows.map(r=>r["Last Updated"]).filter(Boolean).sort();
+      const lastDate=dates.at(-1)||"unknown";
+      document.getElementById("navMeta").textContent=`${allRows.length} entries`;
+      document.getElementById("entryCount").textContent=allRows.length;
+      document.getElementById("statEntries").textContent=allRows.length+"+";
+      document.getElementById("footerMeta").textContent=`${allRows.length} entries · ${lastDate}`;
       applyFilter();
-    } catch (err) {
-      document.getElementById("loadingMsg").textContent =
-        "⚠️ Could not load software data. If running locally, serve from a web server (e.g. npx serve).";
+    } catch(err){
+      document.getElementById("loadingMsg").textContent="⚠️ Could not load data.";
       console.error(err);
     }
   }
 
+  // ── Modal ────────────────────────────────────────────────
+  function openModal(){document.getElementById("modalBackdrop").classList.add("open");}
+  function closeModal(){document.getElementById("modalBackdrop").classList.remove("open");resetForm();}
+  function handleBackdropClick(e){if(e.target===e.currentTarget)closeModal();}
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+  function resetForm(){
+    ["f-name","f-url","f-notes","f-token"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("f-category").value="";
+    document.getElementById("formMsg").textContent="";
+    document.getElementById("formMsg").className="form-msg";
+    document.getElementById("submitBtn").disabled=false;
+  }
+  function setMsg(text,type){const el=document.getElementById("formMsg");el.textContent=text;el.className=`form-msg ${type}`;}
+
+  async function submitSuggestion(){
+    const name=document.getElementById("f-name").value.trim();
+    const category=document.getElementById("f-category").value;
+    const url=document.getElementById("f-url").value.trim();
+    const notes=document.getElementById("f-notes").value.trim();
+    const token=document.getElementById("f-token").value.trim();
+    if(!name||!category||!url||!token){setMsg("Please fill in all required fields.","error");return;}
+    if(!url.startsWith("http")){setMsg("Please enter a valid URL starting with https://","error");return;}
+    const btn=document.getElementById("submitBtn");btn.disabled=true;setMsg("Submitting…","");
+    const issueBody=`## Software Suggestion\n\n| Field | Value |\n|---|---|\n| **Software Name** | ${name} |\n| **Category** | ${category} |\n| **Official URL** | ${url} |\n| **Notes** | ${notes||"—"} |\n\n---\n_Submitted via IsItFree? suggestion form._\n\n<!-- CSV_ROW: ${name},${category},,${url},${new Date().toISOString().split("T")[0]},${notes} -->`;
+    try{
+      const res=await fetch(`https://api.github.com/repos/${GITHUB_REPO}/issues`,{
+        method:"POST",
+        headers:{"Authorization":`token ${token}`,"Content-Type":"application/json","Accept":"application/vnd.github.v3+json"},
+        body:JSON.stringify({title:`[Suggestion] ${name}`,body:issueBody,labels:["software-suggestion"]})
+      });
+      if(res.status===201){const data=await res.json();setMsg(`✅ Submitted! Issue #${data.number} created.`,"success");setTimeout(closeModal,3000);}
+      else if(res.status===401){setMsg("Invalid GitHub token.","error");btn.disabled=false;}
+      else{const err=await res.json();setMsg(`Error: ${err.message||"Failed."}` ,"error");btn.disabled=false;}
+    }catch(e){setMsg("Network error. Please try again.","error");btn.disabled=false;}
+  }
+
   loadData();
+  showPage("home");
 </script>
 </body>
 </html>
