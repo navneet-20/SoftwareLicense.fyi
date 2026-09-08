@@ -91,6 +91,125 @@ footer{border-top:1px solid #1b2533;background:#070a10;padding:24px max(24px,cal
 @media(max-width:650px){nav{padding:0 14px;gap:12px}.nav-links{margin-left:auto}.nav-links a:not(.nav-cta){display:none}.nav-links .nav-cta{margin-left:0}.home-hero,.features,.section,.updates,.author-section,.upcoming,.dir-hero,.controls,.legend,.table-wrap{padding-left:15px;padding-right:15px}.home-hero{padding-top:48px}.home-hero h1{font-size:2.8rem}.home-hero>p{font-size:.88rem}.stats-bar{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid #222d3d}.stat:last-child{border-bottom:0}.features{grid-template-columns:1fr;margin-bottom:65px}.cat-grid,.upcoming-grid{grid-template-columns:1fr}.section,.updates,.upcoming,.author-section{margin-bottom:65px}.update-card{grid-template-columns:1fr;gap:4px}.controls{flex-direction:column}.controls .btn-primary,select{width:100%}.form-row{grid-template-columns:1fr}td.notes-cell,td.date-cell{display:none}footer{align-items:flex-start;flex-direction:column}.footer-right{align-items:flex-start;text-align:left}.search-shortcut{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 
+
+/* ── Readability & contrast pass (desktop-first) ── */
+:root{
+  --bg:#0b1020;
+  --panel:#121a2a;
+  --panel-2:#172238;
+  --panel-3:#1c2940;
+  --line:#2b3a54;
+  --line-soft:#24324a;
+  --text:#f7f9fc;
+  --muted:#b4bfd0;
+  --muted-2:#93a1b5;
+  --blue:#6ea8ff;
+  --blue-2:#9b8cff;
+}
+body{font-size:17px;line-height:1.72;background:var(--bg);color:var(--text)}
+body:before{background:linear-gradient(180deg,rgba(83,145,255,.07),transparent 38%),radial-gradient(circle at 88% 5%,rgba(124,105,255,.08),transparent 28rem)}
+.nav-logo{font-size:1.2rem}.nav-links a{font-size:.96rem;color:#b8c3d3}.nav-meta{font-size:.72rem;color:#9eabc0}
+.home-hero .eyebrow{font-size:.75rem}.home-hero>p{font-size:1.08rem;color:#bdc7d6;line-height:1.85}.home-search-box{min-height:58px;background:#111a2a;border-color:#34445f}.home-search-box input{font-size:1rem;color:#f7f9fc}.last-ai-update{font-size:.72rem;color:#93a1b5}
+.btn-primary,.btn-secondary{font-size:.95rem;padding:12px 17px}.section-title{font-size:1.9rem}.section-sub{font-size:1rem;color:#aeb9ca}
+.feature-card h3{font-size:1rem}.feature-card p{font-size:.9rem;color:#aeb9ca}.cat-name{font-size:.95rem}.cat-desc{font-size:.84rem;color:#a5b1c2}.update-date{font-size:.72rem}.update-content h4{font-size:1rem}.update-content p{font-size:.9rem;color:#aeb9ca}
+.upcoming-card h3{font-size:1.05rem}.upcoming-card p{font-size:.88rem;color:#aeb9ca}.author-info h3{font-size:1rem}.author-info p{font-size:.84rem;color:#aeb9ca}.author-link{font-size:.75rem}
+.dir-hero p{font-size:1rem;color:#aeb9ca}.controls input,.controls select{font-size:1rem;min-height:46px}.legend{font-size:.88rem;color:#aeb9ca}
+table{font-size:.95rem}thead th{font-size:.82rem;color:#b5c0d0;padding:15px 15px}tbody td{padding:15px;color:#e5eaf2}tbody tr:hover td{background:rgba(110,168,255,.055)}.badge{font-size:.78rem}.flag-btn{font-size:.72rem}
+footer{font-size:.76rem;color:#8f9db2}
+.modal{background:#121a2a;border-color:#34445f}.modal h2{font-size:1.5rem}.modal-sub,.form-group label{font-size:.9rem;color:#b5c0d0}.form-group input,.form-group select,.form-group textarea{font-size:1rem;background:#0e1727;color:#f7f9fc;border-color:#34445f}
+@media(max-width:650px){body{font-size:16px}.home-hero>p{font-size:.96rem}.section-sub{font-size:.9rem}.feature-card p,.cat-desc,.upcoming-card p,.update-content p{font-size:.84rem}table{font-size:.9rem}}
+
+
+/* ── Desktop readability + compact layout refinement ── */
+@media (min-width:1001px){
+  :root{--container:1360px}
+  body{font-size:18px;line-height:1.65}
+  nav{height:76px;gap:30px}
+  .nav-logo{font-size:1.2rem}
+  .nav-links{gap:6px}
+  .nav-links a{font-size:1rem;padding:10px 13px}
+  .nav-meta{font-size:.75rem}
+
+  /* Keep the existing HTML, but use the grid intentionally so content does not
+     get vertically stretched by the terminal card. */
+  .home-hero{
+    grid-template-columns:minmax(0,1fr) minmax(480px,.9fr);
+    grid-template-rows:auto auto auto auto auto;
+    column-gap:72px;
+    row-gap:18px;
+    align-items:start;
+    padding-top:72px;
+    padding-bottom:58px;
+  }
+  .home-hero .eyebrow{grid-column:1;grid-row:1;font-size:.82rem;padding:7px 12px;margin-bottom:0}
+  .home-hero h1{grid-column:1;grid-row:2;font-size:clamp(3.6rem,5vw,5.4rem);line-height:.98;margin:0 0 2px;max-width:760px}
+  .home-hero>p{grid-column:1;grid-row:3;font-size:1.12rem;line-height:1.75;max-width:720px;margin:0}
+  .hero-btns{grid-column:1;grid-row:4;align-self:start;margin-top:4px}
+  .hero-btns .btn-primary,.hero-btns .btn-secondary{font-size:1rem;padding:13px 18px}
+  .home-search{grid-column:2;grid-row:1 / span 2;width:100%;max-width:none;margin:0;align-self:start}
+  .home-search-box{min-height:64px;border-radius:13px;padding:7px 9px}
+  .home-search-box input{font-size:1.08rem;padding:12px 5px}
+  .home-search-box svg{width:20px;height:20px;margin-left:10px}
+  .search-shortcut{font-size:.7rem;padding:4px 8px}
+  .last-ai-update{font-size:.72rem;margin-top:10px}
+  .demo-terminal{grid-column:2;grid-row:3 / span 2;align-self:start;width:100%;max-width:none}
+  .terminal-card{border-radius:16px}
+  .terminal-body{padding:25px;font-size:.86rem;line-height:1.9}
+  .terminal-head{height:46px}
+  .terminal-label{font-size:.68rem}
+  .stats-bar{grid-column:1 / -1;grid-row:5;margin-top:8px}
+  .stat{padding:17px 20px}
+  .stat-num{font-size:1.25rem}
+  .stat-label{font-size:.76rem}
+
+  .features{margin-bottom:72px}
+  .feature-card{padding:26px 24px}
+  .feature-card h3{font-size:1.05rem;margin-bottom:7px}
+  .feature-card p{font-size:.9rem;line-height:1.7}
+  .section-title{font-size:2rem}
+  .section-sub{font-size:1rem;margin-bottom:24px}
+  .cat-card{min-height:150px;padding:20px}
+  .cat-name{font-size:1rem;margin-bottom:10px}
+  .cat-desc{font-size:.86rem;line-height:1.7}
+  .update-content h4{font-size:1rem}
+  .update-content p{font-size:.86rem}
+  .upcoming-card{min-height:180px;padding:22px}
+  .upcoming-card h3{font-size:1.08rem}
+  .upcoming-card p{font-size:.86rem}
+
+  /* Directory: larger text, tighter row height, stronger contrast. */
+  .dir-hero{padding-top:50px;padding-bottom:10px}
+  .dir-hero h1{font-size:clamp(2.5rem,4vw,3.6rem)}
+  .dir-hero p{font-size:1rem}
+  .controls{gap:10px;padding-top:18px;padding-bottom:13px}
+  .controls input,.controls select,input[type=search],input[type=text],select,textarea{font-size:1rem;min-height:50px}
+  .legend{gap:8px;padding-bottom:16px;font-size:.95rem}
+  .badge{font-size:.72rem;padding:5px 10px}
+  table{font-size:1rem;min-width:1000px}
+  thead th{font-size:.7rem;padding:14px 16px}
+  td{padding:17px 16px}
+  td.name-cell{font-size:1rem}
+  td.notes-cell{font-size:.88rem;line-height:1.55;color:#aeb9ca}
+  td.date-cell{font-size:.72rem;color:#9aa8bc}
+  .flag-btn{font-size:.68rem;padding:5px 8px}
+  .pagination{font-size:.8rem}
+  .page-btn{font-size:.7rem;padding:7px 10px}
+  footer{font-size:.78rem}
+}
+
+/* Better readability on tablets too, without changing the mobile design. */
+@media (min-width:651px) and (max-width:1000px){
+  body{font-size:17px}
+  .home-hero{gap:34px;padding-top:58px}
+  .home-hero h1{font-size:3.6rem}
+  .home-hero>p{font-size:1.05rem}
+  table{font-size:.98rem}
+  thead th{font-size:.72rem}
+  td{padding:15px}
+  td.name-cell{font-size:.98rem}
+  td.notes-cell{font-size:.86rem}
+}
+
 </style>
 </head>
 <body>
@@ -169,7 +288,7 @@ footer{border-top:1px solid #1b2533;background:#070a10;padding:24px max(24px,cal
     <div class="feature-card">
       <div class="feature-icon">🤖</div>
       <h3>AI-Verified Daily</h3>
-      <p>Gemini AI automatically discovers and verifies 10 new software tools every day, keeping the directory fresh.</p>
+      <p>Gemini AI automatically discovers and verifies 15 new software tools every day, keeping the directory fresh.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">⚖️</div>
@@ -221,7 +340,7 @@ footer{border-top:1px solid #1b2533;background:#070a10;padding:24px max(24px,cal
       <div class="update-content">
         <span class="update-tag tag-new">NEW</span>
         <h4>Daily AI Discovery Launched</h4>
-        <p>Gemini AI now automatically discovers and adds 10 new software tools to the directory every day at 1:30 PM IST. No manual work required.</p>
+        <p>Gemini AI now automatically discovers and adds 15 new software tools to the directory every day at 1:30 PM IST. No manual work required.</p>
       </div>
     </div>
     <div class="update-card">
