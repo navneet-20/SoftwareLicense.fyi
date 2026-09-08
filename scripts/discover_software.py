@@ -18,10 +18,10 @@ from google import genai
 # ── Config ─────────────────────────────────────────────────────────────────────
 GEMINI_KEY  = os.getenv("GEMINI_API_KEY", "")
 CSV_PATH    = Path(__file__).parent.parent / "data" / "software_list.csv"
-NEW_PER_RUN  = 10
+NEW_PER_RUN  = 15
 GEMINI_MODEL = "gemini-3.6-flash"
 MAX_RETRIES  = 3
-RETRY_DELAY  = 30  # seconds between retries on 503
+RETRY_DELAY  = 60  # seconds between retries on 503
 
 VALID_CATEGORIES = [
     "Open Source",
