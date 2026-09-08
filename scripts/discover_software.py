@@ -63,14 +63,14 @@ def discover_new_software(existing_names: list[str]) -> list[dict]:
     existing_str = "\n".join(f"- {n}" for n in existing_names)
 
     prompt = f"""
-You are a software licensing expert building a directory of popular software tools.
+You’re a software licensing expert building a directory of popular tools.
 
-The following software is ALREADY in our directory — do NOT suggest any of these:
+These software tools are already listed — do NOT suggest any of these:
 {existing_str}
 
 Your task: Suggest exactly {NEW_PER_RUN} well-known software tools NOT in the list above.
-Pick from a variety of categories: developer tools, productivity apps, design tools,
-databases, security tools, communication tools, creative software, cloud tools, etc.
+Pick from a variety of categories: developer, productivity apps, design, jdks,
+databases, security, communication, creative software, cloud, etc.
 
 For each tool, classify into EXACTLY ONE of these license categories:
 1. "Open Source"            — Source available, free for all (MIT, GPL, Apache, etc.)
@@ -86,7 +86,7 @@ Return ONLY a valid JSON array, no markdown, no explanation:
     "category": "Open Source",
     "license_status": "Free - Open Source",
     "official_url": "https://example.com",
-    "notes": "One sentence describing the key licensing detail."
+    "notes": "One-Two sentence describing the key licensing detail."
   }}
 ]
 """
