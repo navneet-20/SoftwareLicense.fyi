@@ -439,3 +439,18 @@ Mountain Duck,License Required,Paid License Required,https://mountainduck.io,202
 Seq,Community Version,Free Community Edition / Paid Enterprise,https://datalust.co/seq,2026-09-14,Provides a free single-user Community license for structured logging alongside paid commercial team tiers.
 PDF Expert,License Required,Paid License Required,https://pdfexpert.com,2026-09-14,A PDF editing application for macOS and iOS requiring a paid subscription or lifetime license purchase.
 Rectangle,Open Source,Free - Open Source,https://rectangleapp.com,2026-09-14,An open source window manager application for macOS released under the MIT License.
+Apache Solr,Open Source,Apache License 2.0,https://solr.apache.org,2026-09-15,Apache Solr is an open-source enterprise search platform distributed under the Apache License 2.0.
+Clip Studio Paint,License Required,Proprietary software requiring a paid license or subscription,https://www.clipstudio.net,2026-09-15,Clip Studio Paint requires a paid one-time purchase or an ongoing subscription plan for full functionality.
+K3s,Open Source,Apache License 2.0,https://k3s.io,2026-09-15,K3s is a CNCF sandbox project distributed as fully open-source software under the Apache License 2.0.
+SingleStore,License Required,Proprietary Commercial License Required,https://www.singlestore.com,2026-09-15,"SingleStore is proprietary commercial software requiring a license key or cloud subscription for operation, though a limited free tier is available."
+Jitsi Meet,Open Source,Apache License 2.0,https://jitsi.org,2026-09-15,"Jitsi Meet is fully open source and licensed under the Apache License 2.0, allowing free personal and commercial use."
+SapMachine,Open Source,Free and Open Source (GPLv2 with Classpath Exception),https://sap.github.io/SapMachine,2026-09-15,"SapMachine is an open-source build of OpenJDK licensed under the GNU General Public License v2 with Classpath Exception, making it free for both personal and commercial use."
+Bartender,License Required,Paid commercial license with a free 4-week trial,https://www.macbartender.com,2026-09-15,Bartender is proprietary macOS software that requires purchasing a license after a 4-week trial period.
+Acunetix,License Required,Proprietary Commercial License,https://www.acunetix.com,2026-09-15,Acunetix is a commercial web security scanner that requires a paid subscription license for all use cases.
+Flux CD,Open Source,Open Source (Apache License 2.0),https://fluxcd.io,2026-09-15,Flux CD is a CNCF graduated project fully licensed under the Apache License 2.0.
+GoodSync,License Required,Paid Subscription / Commercial License,https://www.goodsync.com,2026-09-15,"GoodSync requires a paid subscription or license for both personal and commercial use, offering only a heavily restricted free trial version."
+OmniPlan,License Required,Paid License Required,https://www.omnigroup.com/omniplan,2026-09-15,Commercial project management software requiring a paid license or subscription.
+YARA,Open Source,Free - Open Source,https://virustotal.github.io/yara,2026-09-15,"Pattern-matching swiss knife for malware researchers, open-sourced under the BSD 3-Clause License."
+DaisyDisk,License Required,Paid License Required,https://daisydiskapp.com,2026-09-15,Disk visualization and cleaning software for macOS requiring a one-time per-user license purchase.
+ChromaDB,Open Source,Free - Open Source,https://www.trychroma.com,2026-09-15,Open-source AI vector database licensed under Apache License 2.0.
+ScreenToGif,Open Source,Free - Open Source,https://www.screentogif.com,2026-09-15,"Windows screen, webcam, and sketchpad recorder open-sourced under the MS-PL license."
