@@ -454,3 +454,18 @@ YARA,Open Source,Free - Open Source,https://virustotal.github.io/yara,2026-09-15
 DaisyDisk,License Required,Paid License Required,https://daisydiskapp.com,2026-09-15,Disk visualization and cleaning software for macOS requiring a one-time per-user license purchase.
 ChromaDB,Open Source,Free - Open Source,https://www.trychroma.com,2026-09-15,Open-source AI vector database licensed under Apache License 2.0.
 ScreenToGif,Open Source,Free - Open Source,https://www.screentogif.com,2026-09-15,"Windows screen, webcam, and sketchpad recorder open-sourced under the MS-PL license."
+OrbStack,License for Commercial,Free for personal/non-commercial use; paid license required for commercial use,https://orbstack.dev,2026-09-16,"OrbStack is free for personal and non-commercial use, but requires a paid Pro or Business license for commercial use."
+Snipaste,License for Commercial,Free for personal use; commercial use requires a paid license,https://www.snipaste.com,2026-09-16,"Snipaste is free for personal and non-commercial use, but requires purchasing a PRO or Commercial license for use in a business environment."
+Directory Opus,License Required,Paid proprietary software with a free 60-day trial,https://www.gpsoft.com.au,2026-09-16,Directory Opus requires a paid license for continued use after its 60-day evaluation period.
+Magnet,License Required,Paid application requiring purchase,https://magnet.crowdcafe.com,2026-09-16,Magnet is a proprietary macOS window manager available exclusively as a paid purchase on the Mac App Store.
+GraalVM Community Edition,Open Source,Open Source (GPLv2 with Classpath Exception / UPL),https://www.graalvm.org,2026-09-16,GraalVM Community Edition is free and open-source software licensed primarily under the GNU General Public License version 2 with Classpath Exception and the Universal Permissive License.
+Alpine Linux,Open Source,Free and Open Source (GPL-2.0 and various open-source licenses),https://alpinelinux.org,2026-09-16,"Alpine Linux is an entirely free and open-source operating system built using musl libc and BusyBox, released under permissive and copyleft open-source licenses."
+TiDB,Open Source,Apache License 2.0,https://pingcap.com/products/tidb,2026-09-16,TiDB is an open-source distributed SQL database released under the Apache License 2.0.
+DbGate,Open Source,Open Source (MIT License),https://dbgate.org,2026-09-16,DbGate is an open-source database client licensed under the permissive MIT License for both personal and commercial use.
+TextMate,Open Source,Free - Open Source,https://macromates.com,2026-09-16,TextMate is a text editor for macOS released as open-source software under the GNU GPLv3 license.
+Wings 3D,Open Source,Free - Open Source,https://www.wings3d.com,2026-09-16,Wings 3D is an open-source subdivision modeler licensed under a permissive BSD-style license.
+Renoise,License Required,Paid License,https://www.renoise.com,2026-09-16,Renoise is a commercial Digital Audio Workstation (DAW) that requires a paid user license for full functionality.
+Sniffnet,Open Source,Free - Open Source,https://www.sniffnet.net,2026-09-16,Sniffnet is an open-source network monitoring tool written in Rust and licensed under MIT/Apache-2.0.
+Kamal,Open Source,Free - Open Source,https://kamal-deploy.org,2026-09-16,Kamal is an open-source web application deployment tool licensed under the MIT License.
+PopClip,License Required,Paid License,https://www.popclip.app,2026-09-16,PopClip is a commercial text-selection productivity utility for macOS that requires a paid license.
+John the Ripper,Open Source,Free - Open Source,https://www.openwall.com/john,2026-09-16,John the Ripper is an open-source password security auditing tool licensed under the GNU GPL.
