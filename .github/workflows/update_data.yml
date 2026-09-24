@@ -35,7 +35,10 @@ jobs:
           cache-dependency-path: scripts/requirements.txt
 
       - name: 📦 Install dependencies
-        run: pip install -r scripts/requirements.txt
+        run: | 
+          python -m pip install --upgrade pip 
+          pip install -r scripts/requirements.txt
+          pip install google-generativeai
 
       - name: 🔍 Run license updater
         env:
