@@ -9,7 +9,7 @@ on:
 
 jobs:
   discover-software:
-    name: Discover & Add 10 New Software Entries
+    name: Discover & Add 15 New Software Entries
     runs-on: ubuntu-latest
 
     permissions:
